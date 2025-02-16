@@ -45,7 +45,7 @@ dependencies:
   network:
     git:
       url: https://eihror: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@github.com/eihror/flutter_network_library.git
-      ref: v1.1.5  # This is the tag reference
+      ref: v1.1.6  # This is the tag reference
   common:
     git:
       url: https://eihror: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@github.com/eihror/flutter_common_library.git
