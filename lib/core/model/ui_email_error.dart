@@ -1,0 +1,4 @@
+enum UiEmailError {
+  empty,
+  invalidFormat,
+}

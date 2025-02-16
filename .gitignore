@@ -1,0 +1,73 @@
+# Dart/Pub related files
+.dart_tool/
+.packages
+.pub-cache/
+.pub/
+
+# Flutter specific files
+.flutter-plugins
+.flutter-plugins-dependencies
+.flutter-versions
+generated_plugin_registrant.dart
+
+# Build output directories
+build/
+ios/Flutter/Flutter.framework
+ios/Flutter/Flutter.podspec
+ios/Flutter/Generated.xcconfig
+ios/ServiceDefinitions.json
+android/app/*.keystore
+
+# iOS specific files
+ios/Pods/
+ios/.symlinks/
+ios/Flutter/App.framework
+ios/Flutter/engine/
+ios/Flutter/Flutter.podspec
+ios/Flutter/Flutter.framework
+ios/Flutter/Generated.xcconfig
+ios/ServiceDefinitions.json
+*.xcworkspace
+*.xcuserstate
+*.xcodeproj/*
+!*.xcodeproj/project.pbxproj
+!*.xcodeproj/xcshareddata/
+*.plist
+
+# Android specific files
+**/local.properties
+**/out/
+**/android/app/*.keystore
+
+# Web related files
+web/.dart_tool/
+web/build/
+
+# VS Code
+.vscode/
+
+# IntelliJ related files
+.idea/
+*.iml
+
+# Miscellaneous
+*.log
+*.tmp
+*.swp
+*.lock
+.DS_Store
+*.orig
+
+# FVM Version Cache
+.fvm/
+
+# Coverage folder
+coverage
+
+# l10 Error log
+l10n_error_log.txt
+
+# Freezed files
+lib/**/*.freezed.dart
+
+devtools_options.yaml
