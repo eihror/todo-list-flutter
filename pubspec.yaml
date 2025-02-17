@@ -44,11 +44,11 @@ dependencies:
   go_router: ^14.7.1
   network:
     git:
-      url: https://eihror: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@github.com/eihror/flutter_network_library.git
+      url: https://github.com/eihror/flutter_network_library.git
       ref: v1.1.6  # This is the tag reference
   common:
     git:
-      url: https://eihror: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@github.com/eihror/flutter_common_library.git
+      url: https://github.com/eihror/flutter_common_library.git
       ref: v0.3.1  # This is the tag reference
   shared_preferences: ^2.4.0
   shared_preferences_android: ^2.4.3
