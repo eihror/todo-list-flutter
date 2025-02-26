@@ -6,7 +6,7 @@ import 'package:get_it/get_it.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:todo_list/di/di.dart';
 import 'package:todo_list/feature/authentication/data/data_source/local/local_authentication_data_source.dart';
-import 'package:todo_list/feature/authentication/data/data_source/model/response/sign_in_response.dart';
+import 'package:todo_list/feature/authentication/data/data_source/model/sign_in_response.dart';
 import 'package:todo_list/feature/authentication/data/data_source/remote/remote_authentication_data_source.dart';
 import 'package:todo_list/feature/authentication/presentation/sign_in/sign_in_screen.dart';
 

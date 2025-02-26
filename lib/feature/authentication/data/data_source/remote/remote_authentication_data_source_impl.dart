@@ -1,7 +1,7 @@
 import 'package:common/model/result.dart';
 import 'package:network/network.dart';
-import 'package:todo_list/feature/authentication/data/data_source/model/request/sign_in_request.dart';
-import 'package:todo_list/feature/authentication/data/data_source/model/response/sign_in_response.dart';
+import 'package:todo_list/feature/authentication/data/data_source/model/sign_in_request.dart';
+import 'package:todo_list/feature/authentication/data/data_source/model/sign_in_response.dart';
 import 'package:todo_list/feature/authentication/data/data_source/remote/remote_authentication_data_source.dart';
 
 class RemoteAuthenticationDataSourceImpl
