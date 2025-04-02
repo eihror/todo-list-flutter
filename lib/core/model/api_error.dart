@@ -8,8 +8,8 @@ class ApiErrors {
   factory ApiErrors.fromMap(Map<String, dynamic> map) {
     return ApiErrors(
       errors: (map['errors'] as List<dynamic>?)
-          ?.map((e) => ApiError.fromMap(e))
-          .toList() ??
+              ?.map((e) => ApiError.fromMap(e))
+              .toList() ??
           List.empty(),
     );
   }

@@ -1,4 +1,5 @@
 {
+  "@@locale": "en",
   "helloWorld": "Hello World!",
   "signInScreenTitle": "Sign In",
   "signInScreenSignInButton": "Sign In",

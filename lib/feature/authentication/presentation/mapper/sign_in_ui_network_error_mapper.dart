@@ -40,7 +40,7 @@ class SignInUiNetworkErrorMapper extends UiErrorMapper with TextLocalization {
         text: mappedErrorMessage[SignInFieldType.signIn]!,
         confirmOrDismissButtonText: textLocalization.genericErrorDismissButton,
       );
-    }else {
+    } else {
       return FieldMessage(errorMessages: mappedErrorMessage);
     }
   }

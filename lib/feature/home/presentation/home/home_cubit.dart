@@ -8,11 +8,8 @@ class HomeCubit extends Cubit<HomeState> {
   void onInitScreen() {}
 
   void clickedOnCreateTodoFAB() {
-    emit(
-      state.copyWith(
-        showCreateTodoDialog: true,
-      ),
-    );
+    emit(state.copyWith(showCreateTodoDialog: true));
+    emit(state.copyWith(showCreateTodoDialog: false));
   }
 
   void clickedOnTodoItem(int position) {
@@ -24,6 +21,10 @@ class HomeCubit extends Cubit<HomeState> {
         showCreateTodoDialog: true,
       ),
     );
+    emit(state.copyWith(
+      todoSelected: todoSelected,
+      showCreateTodoDialog: false,
+    ));
   }
 
   void clickedOnTodoItemCheckbox(int position, bool status) {}
@@ -42,6 +43,7 @@ class HomeCubit extends Cubit<HomeState> {
     emit(
       state.copyWith(
         todoList: actualList,
+        showCreateTodoDialog: false,
       ),
     );
   }
@@ -58,14 +60,6 @@ class HomeCubit extends Cubit<HomeState> {
     emit(
       state.copyWith(
         todoDescription: value,
-      ),
-    );
-  }
-
-  void handleShowNewTodoDialog() {
-    emit(
-      state.copyWith(
-        showCreateTodoDialog: false,
       ),
     );
   }

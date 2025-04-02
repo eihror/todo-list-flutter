@@ -1,7 +1,7 @@
 import 'package:todo_list/core/model/ui_email_error.dart';
 
 class EmailValidator {
-  UiEmailError? validate({
+  static UiEmailError? validate({
     required String email,
   }) {
     if (email.isEmpty) {
