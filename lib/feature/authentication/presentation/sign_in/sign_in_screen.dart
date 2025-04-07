@@ -20,66 +20,69 @@ class SignInScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => GetIt.I<SignInCubit>(),
-      child: BlocListener<SignInCubit, SignInState>(
-        listenWhen: (previous, next) => previous.hashCode != next.hashCode,
+      child: BlocConsumer<SignInCubit, SignInState>(
+        listenWhen: (previous, next) => previous != next,
         listener: _handleSideEffect,
-        child: Scaffold(
-          appBar: AppBar(
-            title: Text(context.i18n.signInScreenTitle),
-            centerTitle: true,
-            automaticallyImplyLeading: false,
-          ),
-          body: BlocBuilder<SignInCubit, SignInState>(
-            builder: (context, state) {
-              final cubit = context.read<SignInCubit>();
-              return Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    SignInForm(
-                      onUserEmailValueChanged: cubit.onUserEmailTextChanged,
-                      onUserPasswordValueChanged:
-                          cubit.onUserPasswordTextChanged,
-                      userEmailErrorMessage:
-                          state.uiEmailError?.mapToString(context),
-                      userPasswordErrorMessage:
-                          state.uiPasswordError?.mapToString(context),
+        builder: (context, state) {
+          final cubit = context.read<SignInCubit>();
+          return Scaffold(
+            appBar: AppBar(
+              title: Text(context.i18n.signInScreenTitle),
+              centerTitle: true,
+              automaticallyImplyLeading: false,
+            ),
+            body: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SignInForm(
+                    onUserEmailValueChanged: cubit.onUserEmailTextChanged,
+                    onUserPasswordValueChanged: cubit.onUserPasswordTextChanged,
+                    userEmailErrorMessage:
+                        state.uiEmailError?.mapToString(context),
+                    userPasswordErrorMessage:
+                        state.uiPasswordError?.mapToString(context),
+                  ),
+                  const SizedBox(height: 16),
+                  state.showLoading
+                      ? const CircularProgressIndicator()
+                      : FilledButton(
+                          onPressed: (!state.showLoading)
+                              ? cubit.clickedOnSignInButton
+                              : null,
+                          child: Text(context.i18n.signInScreenSignInButton),
+                        ),
+                  const Spacer(),
+                  RichText(
+                    text: TextSpan(
+                      text: context.i18n.signInScreenSignUpTextPartOne,
+                      style: const TextStyle(color: Colors.black, fontSize: 14),
+                      children: [
+                        TextSpan(
+                          text:
+                              context.i18n.signInScreenSignUpTextPartTwoButton,
+                          style:
+                              TextStyle(color: Theme.of(context).primaryColor),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              context.push(
+                                SignUpRoute.withEmail(email: state.userEmail)
+                                    .path,
+                              );
+                            },
+                        ),
+                        TextSpan(
+                          text: context.i18n.signInScreenSignUpTextPartThree,
+                        ),
+                      ],
                     ),
-                    const SizedBox(height: 16),
-                    FilledButton(
-                      onPressed: (!state.showLoading)
-                          ? cubit.clickedOnSignInButton
-                          : null,
-                      child: Text(context.i18n.signInScreenSignInButton),
-                    ),
-                    const Spacer(),
-                    RichText(
-                      text: TextSpan(
-                        text: context.i18n.signInScreenSignUpTextPartOne,
-                        style:
-                            const TextStyle(color: Colors.black, fontSize: 14),
-                        children: [
-                          TextSpan(
-                            text: context
-                                .i18n.signInScreenSignUpTextPartTwoButton,
-                            style: TextStyle(
-                                color: Theme.of(context).primaryColor),
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = cubit.clickedOnSignUpButton,
-                          ),
-                          TextSpan(
-                            text: context.i18n.signInScreenSignUpTextPartThree,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            },
-          ),
-        ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
       ),
     );
   }
@@ -88,9 +91,7 @@ class SignInScreen extends StatelessWidget {
     BuildContext context,
     SignInState state,
   ) {
-    if (state.showSignInRequestError && state.signInRequestError != null) {
-      context.read<SignInCubit>().handleShowSignInErrorDialog();
-
+    if (state.signInRequestError != null) {
       final error = state.signInRequestError! as AlertMessage;
 
       showDialog(
@@ -112,16 +113,9 @@ class SignInScreen extends StatelessWidget {
         },
       );
     }
-    if (state.navigateToHomeScreen) {
-      context.read<SignInCubit>().handleNavigateToHomeScreen();
-      context.pushReplacement(HomeRoute().path);
-    }
 
-    if (state.navigateToSignUpScreen) {
-      context.read<SignInCubit>().handleNavigateToSignUpScreen();
-      context.push(
-        SignUpRoute.withEmail(email: state.userEmail).path,
-      );
+    if (state.navigateToHomeScreen) {
+      context.pushReplacement(HomeRoute().path);
     }
   }
 }

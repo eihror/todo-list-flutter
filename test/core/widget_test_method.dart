@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
+import 'package:todo_list/core/l10n/app_localizations.dart';
 
 Widget createWidgetUnderTest({
   required Widget screenToTest,

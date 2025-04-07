@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:todo_list/core/extension/context_extension.dart';
 import 'package:todo_list/core/mixin/text_localization_mixin.dart';
 import 'package:todo_list/feature/home/presentation/home/home_cubit.dart';
 import 'package:todo_list/feature/home/presentation/home/home_state.dart';
@@ -69,20 +68,17 @@ class HomeScreen extends StatelessWidget with TextLocalization {
   ) {
     final cubit = context.read<HomeCubit>();
     if (state.showCreateTodoDialog) {
-      cubit.handleShowNewTodoDialog();
       showModalBottomSheet(
         context: context,
         builder: (context) {
           return TodoDialogModalForm(
             onTodoTitleTextChanged: cubit.onTodoTitleTextChanged,
             onTodoDescriptionTextChanged: cubit.onTodoDescriptionTextChanged,
-            clickedOnCreateTodoItemButton: cubit.clickedOnCreateTodoItemBottomSheet,
+            clickedOnCreateTodoItemButton:
+                cubit.clickedOnCreateTodoItemBottomSheet,
           );
         },
-      ).then((_) {
-        // Update show dialog state on Cubit
-        cubit.handleShowNewTodoDialog();
-      });
+      );
     }
   }
 }

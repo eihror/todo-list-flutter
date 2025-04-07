@@ -1,13 +1,14 @@
-import 'package:common/model/result.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:result_dart/result_dart.dart';
+import 'package:todo_list/core/l10n/app_localizations.dart';
 import 'package:todo_list/di/di.dart';
 import 'package:todo_list/feature/authentication/data/data_source/local/local_authentication_data_source.dart';
-import 'package:todo_list/feature/authentication/data/data_source/model/sign_in_response.dart';
 import 'package:todo_list/feature/authentication/data/data_source/remote/remote_authentication_data_source.dart';
+import 'package:todo_list/feature/authentication/models/auth_credentials.dart';
+import 'package:todo_list/feature/authentication/models/auth_result.dart';
 import 'package:todo_list/feature/authentication/presentation/sign_in/sign_in_screen.dart';
 
 import '../../../../core/extension/app_localization_by_widget_context.dart';
@@ -19,6 +20,10 @@ void main() {
   late AppLocalizations i18n;
   final mockRemote = MockRemoteAuthenticationDataSourceImpl();
   final mockLocal = MockLocalAuthenticationDataSourceImpl();
+
+  setUpAll(() {
+    registerFallbackValue(const AuthCredentials(email: '', password: ''));
+  });
 
   setUp(() {
     DI.registerDependencies();
@@ -55,16 +60,13 @@ void main() {
           value: any(named: "value"),
         ),
       ).thenAnswer((_) async {
-        return Successful(data: null);
+        return const Success(unit);
       });
 
       when(
-        () => mockRemote.signIn(
-          email: any(named: "email"),
-          password: any(named: "password"),
-        ),
+        () => mockRemote.authenticate(credentials: any(named: 'credentials')),
       ).thenAnswer((_) async {
-        return Successful(data: const SignInResponse(accessToken: '123token'));
+        return const Success(AuthResult(accessToken: '123token'));
       });
 
       // when

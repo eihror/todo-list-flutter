@@ -8,7 +8,7 @@ class PasswordValidator {
   static const validateIfHasAtLeastOneLowercaseLetterRegex = r'[a-z]';
   static const validateIfHasAtLeastOneSpecialCharacterRegex = r'[^A-Za-z0-9\s]';
 
-  UiPasswordError? validate({required String password}) {
+  static UiPasswordError? validate({required String password}) {
     if (password.isEmpty) {
       return UiPasswordError.empty;
     }

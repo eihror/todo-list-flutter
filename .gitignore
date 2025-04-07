@@ -54,7 +54,6 @@ web/build/
 *.log
 *.tmp
 *.swp
-*.lock
 .DS_Store
 *.orig
 
@@ -69,5 +68,8 @@ l10n_error_log.txt
 
 # Freezed files
 lib/**/*.freezed.dart
+
+# Generated files
+lib/**/*.g.dart
 
 devtools_options.yaml

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
-import 'package:todo_list/core/extension/context_extension.dart';
 import 'package:todo_list/feature/authentication/presentation/navigation/sign_in_route.dart';
 import 'package:todo_list/feature/authentication/presentation/splash/splash_cubit.dart';
 import 'package:todo_list/feature/authentication/presentation/splash/splash_state.dart';
@@ -16,15 +15,14 @@ class SplashScreen extends StatelessWidget {
     return BlocProvider(
       create: (context) => GetIt.I<SplashCubit>()..onInitScreen(),
       child: BlocListener<SplashCubit, SplashState>(
-        listenWhen: (previous, next) => previous.hashCode != next.hashCode,
+        listenWhen: (previous, next) => previous != next,
         listener: (context, state) {
-          if (state.navigateToSignInScreen) {
-            context.read<SplashCubit>().handleNavigateToSignInScreen();
-            context.pushReplacement(SignInRoute().path);
-          }
-          if (state.navigateToHomeScreen) {
-            context.read<SplashCubit>().handleNavigateToHomeScreen();
-            context.pushReplacement(HomeRoute().path);
+          switch (state.redirectTo) {
+            case SplashRedirectTo.signIn:
+              context.pushReplacement(SignInRoute().path);
+            case SplashRedirectTo.home:
+              context.pushReplacement(HomeRoute().path);
+            default:
           }
         },
         child: Scaffold(
@@ -35,7 +33,6 @@ class SplashScreen extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(context.i18n.helloWorld),
                     Visibility(
                       visible: state.showLoading,
                       child: const CircularProgressIndicator(),

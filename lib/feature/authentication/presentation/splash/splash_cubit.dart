@@ -1,13 +1,13 @@
-import 'package:todo_list/feature/authentication/domain/use_case/verify_if_user_has_logged_use_case.dart';
-import 'package:todo_list/feature/authentication/presentation/splash/splash_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:todo_list/feature/authentication/data/repository/authentication_repository.dart';
+import 'package:todo_list/feature/authentication/presentation/splash/splash_state.dart';
 
 class SplashCubit extends Cubit<SplashState> {
   SplashCubit({
-    required this.verifyIfUserHasLoggedUseCase,
+    required this.authenticationRepository,
   }) : super(const SplashState());
 
-  final VerifyIfUserHasLoggedUseCase verifyIfUserHasLoggedUseCase;
+  final AuthenticationRepository authenticationRepository;
 
   void onInitScreen() async {
     if (state.showLoading) {
@@ -20,35 +20,30 @@ class SplashCubit extends Cubit<SplashState> {
       ),
     );
 
-    final response = await verifyIfUserHasLoggedUseCase();
+    final response = await authenticationRepository.verifyIfUserHasLogged();
     response
-      ..onSuccess((data) {
+      ..onSuccess((isLoggedIn) {
         emit(
           state.copyWith(
-            navigateToSignInScreen: !data,
-            navigateToHomeScreen: data,
+            redirectTo:
+                isLoggedIn ? SplashRedirectTo.home : SplashRedirectTo.signIn,
             showLoading: false,
           ),
         );
+        emit(
+          state.copyWith(redirectTo: null),
+        );
       })
       ..onFailure((exception) {
-        // Update this code later
+        emit(
+          state.copyWith(
+            redirectTo: SplashRedirectTo.signIn,
+            showLoading: false,
+          ),
+        );
+        emit(
+          state.copyWith(redirectTo: null),
+        );
       });
-  }
-
-  void handleNavigateToSignInScreen() {
-    emit(
-      state.copyWith(
-        navigateToSignInScreen: false,
-      ),
-    );
-  }
-
-  void handleNavigateToHomeScreen() {
-    emit(
-      state.copyWith(
-        navigateToHomeScreen: false,
-      ),
-    );
   }
 }
